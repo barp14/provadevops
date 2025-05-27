@@ -103,7 +103,7 @@ services # Lista os serviços do container e define suas variáveis
   db
     image: mysql:8.0 # Usa a imagem do MySQL 8.0.
     container_name: db # Define o nome do container como db.
-    environment 
+    environment:
       MYSQL_ROOT_PASSWORD: 932545 # Define a senha do banco de dados.
       MYSQL_DATABASE: ecommerce # Define o nome do banco de dados.
     ports: 
@@ -121,7 +121,7 @@ services # Lista os serviços do container e define suas variáveis
       - ecommerce # Conecta à rede ecommerce.
 ```
 ```
-  networks
-    ecommerce # Cria uma network para facilitar a comunicação entre os containeres.
-      bridge # Define que é uma rede bridge.
+  networks:
+    ecommerce: # Cria uma network para facilitar a comunicação entre os containeres.
+      bridge: # Define que é uma rede bridge.
 ```
