@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  products:
+    build: ./api-node
+    container_name: products
+    ports:
+      - "3001:3001"
+    networks:
+      - ecommerce
+
+  orders:
+    build: ./api-python
+    container_name: orders
+    ports:
+      - "3002:3002"
+    depends_on:
+      - products
+      - db
+      - redis
+    networks:
+      - ecommerce
+
+  payments:
+    build: ./api-php
+    container_name: payments
+    ports:
+      - "3003:3003"
+    depends_on:
+      - orders
+    networks:
+      - ecommerce
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: 932545
+      MYSQL_DATABASE: ecommerce
+    ports:
+      - "3307:3306"
+    networks:
+      - ecommerce
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ecommerce
+
+networks:
+  ecommerce:
+    driver: bridge
